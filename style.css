@@ -49,7 +49,7 @@ body {
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    gap: 10px;
 }
 
 button {
@@ -61,73 +61,111 @@ button {
     cursor: pointer;
     transition: all 0.2s ease;
     color: white;
+    min-width: 0; /* Важно для одинакового размера */
 }
 
 button:active {
     transform: scale(0.95);
 }
 
-/* Стили для разных типов кнопок */
-button:nth-child(-n+4) {
-    background: #e74c3c;
-}
-
-button:nth-child(-n+4):hover {
-    background: #c0392b;
-}
-
-.memory-btn {
-    background: #9b59b6 !important;
-}
-
-.memory-btn:hover {
-    background: #8e44ad !important;
-}
-
-button:not(.memory-btn):not(:nth-child(-n+4)):not(:nth-child(4n)):not(:nth-child(4n-1)) {
-    background: #34495e;
-}
-
-button:not(.memory-btn):not(:nth-child(-n+4)):not(:nth-child(4n)):not(:nth-child(4n-1)):hover {
-    background: #2c3e50;
-}
-
-/* Кнопки операций */
-button:nth-child(4n), button:nth-child(4n-1) {
-    background: #3498db;
-}
-
-button:nth-child(4n):hover, button:nth-child(4n-1):hover {
-    background: #2980b9;
-}
-
-/* Кнопка равно */
-button:nth-last-child(4) {
-    background: #27ae60;
+/* Особые кнопки - занимают 2 колонки */
+.zero-btn {
     grid-column: span 2;
 }
 
-button:nth-last-child(4):hover {
-    background: #219a52;
+.equals-btn {
+    grid-column: span 2;
+    background: #27ae60 !important;
 }
 
-/* Математические функции */
-button:nth-last-child(n+5):nth-last-child(-n+8) {
+.equals-btn:hover {
+    background: #219a52 !important;
+}
+
+/* Все цифровые кнопки (0-9) и точка - ПРОСТОЙ и понятный способ */
+.digit-btn {
+    background: #34495e;
+}
+
+.digit-btn:hover {
+    background: #010509;
+}
+
+/* Кнопки памяти (первые 4 кнопки) */
+.memory-btn {
+    background: #9b59b6;
+}
+
+.memory-btn:hover {
+    background: #8e44ad;
+}
+
+/* Кнопки операций (/, ×, -, +, %) */
+button:nth-child(4),   /* / */
+button:nth-child(8),   /* × */
+button:nth-child(12),  /* - */
+button:nth-child(16),  /* + */
+button:nth-child(3) {  /* % */
+    background: #3498db;
+}
+
+button:nth-child(4):hover,
+button:nth-child(8):hover,
+button:nth-child(12):hover,
+button:nth-child(16):hover,
+button:nth-child(3):hover {
+    background: #2980b9;
+}
+
+/* Кнопка очистки (C) */
+button:nth-child(5) {
+    background: #e74c3c;
+}
+
+button:nth-child(5):hover {
+    background: #c0392b;
+}
+
+/* Кнопка backspace (⌫) */
+button:nth-child(6) {
+    background: #e67e22;
+}
+
+button:nth-child(6):hover {
+    background: #b6510d;
+}
+
+/* Математические функции (x², sin, cos, √) */
+button:nth-child(21), /* x² */
+button:nth-child(22), /* sin */
+button:nth-child(23), /* cos */
+button:nth-child(24) { /* √ */
     background: #f39c12;
     font-size: 1em;
 }
 
-button:nth-last-child(n+5):nth-last-child(-n+8):hover {
+button:nth-child(21):hover,
+button:nth-child(22):hover,
+button:nth-child(23):hover,
+button:nth-child(24):hover {
     background: #e67e22;
 }
 
-/* Особые функции */
-button:nth-last-child(n+1):nth-last-child(-n+4) {
+/* Особые функции (floor, ceil, mod, log, π) */
+button:nth-child(25), /* floor */
+button:nth-child(26), /* ceil */
+button:nth-child(27), /* mod */
+button:nth-child(28), /* log */
+button:nth-child(29) { /* π */
     background: #16a085;
     font-size: 1em;
 }
 
-button:nth-last-child(n+1):nth-last-child(-n+4):hover {
+button:nth-child(25):hover,
+button:nth-child(26):hover,
+button:nth-child(27):hover,
+button:nth-child(28):hover,
+button:nth-child(29):hover {
     background: #1abc9c;
 }
 

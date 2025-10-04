@@ -1,0 +1,150 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.calculator {
+    background: #2c3e50;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    width: 350px;
+    max-width: 100%;
+}
+
+#display {
+    width: 100%;
+    height: 80px;
+    background: #34495e;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 2em;
+    text-align: right;
+    padding: 0 20px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.memory-indicator {
+    color: #ecf0f1;
+    text-align: right;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+button {
+    height: 60px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: white;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+/* Стили для разных типов кнопок */
+button:nth-child(-n+4) {
+    background: #e74c3c;
+}
+
+button:nth-child(-n+4):hover {
+    background: #c0392b;
+}
+
+.memory-btn {
+    background: #9b59b6 !important;
+}
+
+.memory-btn:hover {
+    background: #8e44ad !important;
+}
+
+button:not(.memory-btn):not(:nth-child(-n+4)):not(:nth-child(4n)):not(:nth-child(4n-1)) {
+    background: #34495e;
+}
+
+button:not(.memory-btn):not(:nth-child(-n+4)):not(:nth-child(4n)):not(:nth-child(4n-1)):hover {
+    background: #2c3e50;
+}
+
+/* Кнопки операций */
+button:nth-child(4n), button:nth-child(4n-1) {
+    background: #3498db;
+}
+
+button:nth-child(4n):hover, button:nth-child(4n-1):hover {
+    background: #2980b9;
+}
+
+/* Кнопка равно */
+button:nth-last-child(4) {
+    background: #27ae60;
+    grid-column: span 2;
+}
+
+button:nth-last-child(4):hover {
+    background: #219a52;
+}
+
+/* Математические функции */
+button:nth-last-child(n+5):nth-last-child(-n+8) {
+    background: #f39c12;
+    font-size: 1em;
+}
+
+button:nth-last-child(n+5):nth-last-child(-n+8):hover {
+    background: #e67e22;
+}
+
+/* Особые функции */
+button:nth-last-child(n+1):nth-last-child(-n+4) {
+    background: #16a085;
+    font-size: 1em;
+}
+
+button:nth-last-child(n+1):nth-last-child(-n+4):hover {
+    background: #1abc9c;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 400px) {
+    .calculator {
+        padding: 15px;
+        width: 100%;
+    }
+    
+    button {
+        height: 50px;
+        font-size: 1em;
+    }
+    
+    #display {
+        height: 60px;
+        font-size: 1.5em;
+    }
+}

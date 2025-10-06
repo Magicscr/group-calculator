@@ -4,24 +4,45 @@ let memoryIndicator = document.getElementById('memoryIndicator');
 
 // Функция для добавления символа на дисплей
 function appendToDisplay(value) {
-    display.value += value;
+    if (display) {
+        display.value += value;
+    }
 }
 
 // Функция для очистки дисплея
 function clearDisplay() {
-    display.value = '';
+    if (display) {
+        display.value = '';
+    }
 }
 
 // Функция для удаления последнего символа
 function backspace() {
-    display.value = display.value.slice(0, -1);
+    if (display) {
+        display.value = display.value.slice(0, -1);
+    }
 }
 
 // Основная функция вычисления
+// Основная функция вычисления
 function calculate() {
+    if (!display) return;
+    
     try {
         // Заменяем × на * для корректного вычисления
         let expression = display.value.replace(/×/g, '*');
+        
+        // Проверяем на деление на ноль перед вычислением
+        if (expression.includes('/0') || expression.match(/\/\s*0(?!\.)/)) {
+            display.value = 'Error';
+            return;
+        }
+        
+        // Обрабатываем проценты
+        expression = expression.replace(/(\d+)%/g, function(match, number) {
+            return '(' + number + '/100)';
+        });
+        
         display.value = eval(expression);
     } catch (error) {
         display.value = 'Error';
@@ -30,6 +51,7 @@ function calculate() {
 
 // Тригонометрические функции (работают с радианами)
 function calculateSin() {
+    if (!display) return;
     let value = parseFloat(display.value);
     if (isNaN(value)) {
         display.value = 'Error';
@@ -39,6 +61,7 @@ function calculateSin() {
 }
 
 function calculateCos() {
+    if (!display) return;
     let value = parseFloat(display.value);
     if (isNaN(value)) {
         display.value = 'Error';
@@ -49,6 +72,7 @@ function calculateCos() {
 
 // Степени и корни
 function calculatePower() {
+    if (!display) return;
     let value = parseFloat(display.value);
     if (isNaN(value)) {
         display.value = 'Error';
@@ -58,6 +82,7 @@ function calculatePower() {
 }
 
 function calculateSqrt() {
+    if (!display) return;
     let value = parseFloat(display.value);
     if (isNaN(value) || value < 0) {
         display.value = 'Error';
@@ -68,6 +93,7 @@ function calculateSqrt() {
 
 // Округление
 function calculateFloor() {
+    if (!display) return;
     let value = parseFloat(display.value);
     if (isNaN(value)) {
         display.value = 'Error';
@@ -77,6 +103,7 @@ function calculateFloor() {
 }
 
 function calculateCeil() {
+    if (!display) return;
     let value = parseFloat(display.value);
     if (isNaN(value)) {
         display.value = 'Error';
@@ -87,12 +114,12 @@ function calculateCeil() {
 
 // Остаток от деления
 function calculateModulus() {
+    if (!display) return;
     let value = parseFloat(display.value);
     if (isNaN(value)) {
         display.value = 'Error';
         return;
     }
-    // Просим пользователя ввести делитель
     let divisor = prompt("Введите делитель:");
     if (divisor === null) return;
     
@@ -106,6 +133,7 @@ function calculateModulus() {
 
 // Логарифм
 function calculateLog() {
+    if (!display) return;
     let value = parseFloat(display.value);
     if (isNaN(value) || value <= 0) {
         display.value = 'Error';
@@ -116,11 +144,14 @@ function calculateLog() {
 
 // Константа π
 function calculatePi() {
-    display.value = Math.PI;
+    if (display) {
+        display.value = Math.PI;
+    }
 }
 
 // Функции памяти
 function memoryAdd() {
+    if (!display) return;
     let currentValue = parseFloat(display.value) || 0;
     memory += currentValue;
     updateMemoryIndicator();
@@ -128,6 +159,7 @@ function memoryAdd() {
 }
 
 function memorySubtract() {
+    if (!display) return;
     let currentValue = parseFloat(display.value) || 0;
     memory -= currentValue;
     updateMemoryIndicator();
@@ -140,26 +172,54 @@ function memoryClear() {
 }
 
 function memoryRecall() {
-    display.value = memory;
+    if (display) {
+        display.value = memory;
+    }
 }
 
 function updateMemoryIndicator() {
-    memoryIndicator.textContent = `M: ${memory}`;
+    if (memoryIndicator) {
+        memoryIndicator.textContent = `M: ${memory}`;
+    }
 }
 
 // Обработка клавиатуры
-document.addEventListener('keydown', function(event) {
-    if (event.key >= '0' && event.key <= '9') {
-        appendToDisplay(event.key);
-    } else if (event.key === '.') {
-        appendToDisplay('.');
-    } else if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
-        appendToDisplay(event.key);
-    } else if (event.key === 'Enter' || event.key === '=') {
-        calculate();
-    } else if (event.key === 'Escape' || event.key === 'c' || event.key === 'C') {
-        clearDisplay();
-    } else if (event.key === 'Backspace') {
-        backspace();
-    }
-});
+if (document) {
+    document.addEventListener('keydown', function(event) {
+        if (!display) return;
+        
+        if (event.key >= '0' && event.key <= '9') {
+            appendToDisplay(event.key);
+        } else if (event.key === '.') {
+            appendToDisplay('.');
+        } else if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
+            appendToDisplay(event.key);
+        } else if (event.key === 'Enter' || event.key === '=') {
+            calculate();
+        } else if (event.key === 'Escape' || event.key === 'c' || event.key === 'C') {
+            clearDisplay();
+        } else if (event.key === 'Backspace') {
+            backspace();
+        }
+    });
+}
+
+// Сделаем функции глобальными для тестов
+window.appendToDisplay = appendToDisplay;
+window.clearDisplay = clearDisplay;
+window.backspace = backspace;
+window.calculate = calculate;
+window.calculateSin = calculateSin;
+window.calculateCos = calculateCos;
+window.calculatePower = calculatePower;
+window.calculateSqrt = calculateSqrt;
+window.calculateFloor = calculateFloor;
+window.calculateCeil = calculateCeil;
+window.calculateModulus = calculateModulus;
+window.calculateLog = calculateLog;
+window.calculatePi = calculatePi;
+window.memoryAdd = memoryAdd;
+window.memorySubtract = memorySubtract;
+window.memoryClear = memoryClear;
+window.memoryRecall = memoryRecall;
+window.updateMemoryIndicator = updateMemoryIndicator;

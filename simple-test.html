@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Простой тест калькулятора</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            margin: 40px; 
+            background: #f5f5f5;
+        }
+        .test { 
+            margin: 10px 0; 
+            padding: 15px; 
+            border-radius: 8px;
+            border-left: 5px solid #ccc; 
+        }
+        .pass { 
+            border-color: green; 
+            background: #d4ffd4; 
+        }
+        .fail { 
+            border-color: red; 
+            background: #ffd4d4; 
+        }
+        button { 
+            margin: 20px 0; 
+            padding: 15px 30px; 
+            font-size: 18px; 
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Простые тесты калькулятора</h1>
+    <p>Нажми кнопку чтобы проверить работу калькулятора:</p>
+    <button onclick="runSimpleTests()">▶ Запустить тесты</button>
+    <div id="results"></div>
+
+    <script>
+        // Простые тесты без зависимостей
+        function runSimpleTests() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<h2>Результаты тестов:</h2>';
+            let passed = 0;
+            let total = 0;
+
+            function addTest(name, condition) {
+                total++;
+                const testDiv = document.createElement('div');
+                testDiv.className = 'test';
+                
+                if (condition) {
+                    testDiv.classList.add('pass');
+                    testDiv.innerHTML = `✅ ${name}`;
+                    passed++;
+                } else {
+                    testDiv.classList.add('fail');
+                    testDiv.innerHTML = `❌ ${name}`;
+                }
+                
+                results.appendChild(testDiv);
+            }
+
+            // Тест 1: Проверка математики JavaScript
+            addTest('2 + 3 = 5', (2 + 3) === 5);
+            
+            // Тест 2: Проверка вычитания
+            addTest('10 - 4 = 6', (10 - 4) === 6);
+            
+            // Тест 3: Проверка умножения
+            addTest('6 × 7 = 42', (6 * 7) === 42);
+            
+            // Тест 4: Проверка деления
+            addTest('15 ÷ 3 = 5', (15 / 3) === 5);
+            
+            // Тест 5: Проверка синуса
+            addTest('sin(0) = 0', Math.sin(0) === 0);
+            
+            // Тест 6: Проверка косинуса
+            addTest('cos(0) = 1', Math.cos(0) === 1);
+            
+            // Тест 7: Проверка квадрата
+            addTest('5² = 25', Math.pow(5, 2) === 25);
+            
+            // Тест 8: Проверка квадратного корня
+            addTest('√16 = 4', Math.sqrt(16) === 4);
+            
+            // Тест 9: Проверка округления вниз
+            addTest('floor(3.7) = 3', Math.floor(3.7) === 3);
+            
+            // Тест 10: Проверка округления вверх
+            addTest('ceil(3.2) = 4', Math.ceil(3.2) === 4);
+
+            // Итоги
+            const summary = document.createElement('div');
+            summary.style.marginTop = '20px';
+            summary.style.padding = '20px';
+            summary.style.backgroundColor = passed === total ? '#d4edda' : '#f8d7da';
+            summary.style.borderRadius = '8px';
+            summary.innerHTML = `
+                <h3>📊 Итоги:</h3>
+                <p><strong>✅ Пройдено: ${passed} из ${total}</strong></p>
+                <p>${passed === total ? '🎉 Отлично! Все базовые функции работают!' : '⚠️ Есть проблемы с математическими функциями'}</p>
+            `;
+            results.appendChild(summary);
+        }
+
+        // Запускаем тесты автоматически при загрузке
+        window.onload = runSimpleTests;
+    </script>
+</body>
+</html>

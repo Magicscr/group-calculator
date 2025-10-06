@@ -24,7 +24,6 @@ function backspace() {
 }
 
 // Основная функция вычисления
-// Основная функция вычисления
 function calculate() {
     if (!display) return;
     
